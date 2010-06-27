@@ -3,7 +3,9 @@
 User directory plugin for [OpenVBX][1]. Allows a caller to 
 search for users by dialing a few letters of the user's name. Once a user is
 selected the applet acts very much like the 
-[standard dial applet][2].
+[standard dial applet][2]. 
+
+[Audio Sample](http://twaud.io/fDt)
 
 [1]: http://openvbx.org/
 [2]: http://github.com/tjlytle/OpenVBX/tree/master/plugins/standard/applets/dial/
