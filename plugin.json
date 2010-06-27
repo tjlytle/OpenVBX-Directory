@@ -1,7 +1,6 @@
-
 {
 	"name" : "Directory",
-	"author" : "Tim Lytle",
-	"description" : "Contact a User by searching the Directory.",
-	"url" : "http://timlytle.net"
+	"author" : "Tim Lytle <tim@timlytle.net>",
+	"description" : "Directory search of Users.",
+	"url" : "http://github.com/tjlytle/OpenVBX-Directory"
 }

@@ -20,3 +20,6 @@ From the [Plugin][3] section of the OpenVBX site.
 
 [3]: http://openvbx.org/plugins/
 
+# License
+-----------------------------
+See [LICENSE](http://github.com/tjlytle/OpenVBX-Directory/blob/master/LICENSE).
