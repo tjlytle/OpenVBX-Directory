@@ -1,5 +1,5 @@
 {
     "name" : "Directory Search",
-    "description" : "Use phone pad to search the User directory.",
+    "description" : "Search User Directory",
     "type" : "voice"
 }
