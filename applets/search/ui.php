@@ -1,12 +1,16 @@
 <div class="vbx-applet">
 	<h2>Directory Search</h2>
         <p>Callers can search for users by dialing a few letters form the user's
-        first or last name. The can press pound when done, or simply wair for 5
-        seconds.
+        first or last name. The can press pound when done, or simply wait for 5
+        seconds.</p>
+        
+        <p>Select a group to search (selecting a user may cause problems, 
+        and is pointless):
+        <?php echo AppletUI::userGroupPicker('group'); ?></p>
 
         <h3>Search Prompt</h3>
         <p>When the caller reaches this menu they will hear this prompt:</p>
-	<?php echo AppletUI::audioSpeechPicker('searchPrompt'); ?>
+		<?php echo AppletUI::audioSpeechPicker('searchPrompt'); ?>
 
         <h3>Menu Prompt</h3>
         <p>The caller can select a user from the menu, or dial 0 to try again.
@@ -23,7 +27,7 @@
         <?php echo AppletUI::audioSpeechPicker('restartMessage'); ?>
 
         <h3>Invalid Selection</h3>
-	<p>Customize a specific message about the invalid selection.</p>
+		<p>Customize a specific message about the invalid selection.</p>
         <?php echo AppletUI::audioSpeechPicker('invalidMessage'); ?>
         
         <h3>Error Message</h3>

@@ -166,53 +166,43 @@ function addMessage($response, $name, $fallback)
 }
 
 //Find users that possible match a series of digits.
-//TODO: It's likely better to work it the other way, generating a list of
-//numbers from the users and looking for a partial match.
+//TODO: Add caching of name to digit map.
 function getMatches($digits)
 {
-    //setup dial pad letters
-    $dialpad[0] = array();
-    $dialpad[1] = array();
-    $dialpad[2] = array('a','b','c');
-    $dialpad[3] = array('d','e','f');
-    $dialpad[4] = array('g','h','i');
-    $dialpad[5] = array('j','k','l');
-    $dialpad[6] = array('m','n','o');
-    $dialpad[7] = array('p','q','r', 's');
-    $dialpad[8] = array('t','u','v');
-    $dialpad[9] = array('w','x','y', 'z');
+	//find group to search
+	$group = AppletInstance::getUserGroupPickerValue('group');
+	
+	foreach($group->users as $user){
+		if(strpos(stringToDigits($user->last_name), $digits) !== false OR strpos(stringToDigits($user->first_name), $digits) !== false){
+			$users[] = $user;
+		}
+	}
+	
+	return $users;
+}
 
-    //start with an empty string
-    $words = array('');
-    //take each digit
-    for($i = 0; $i < strlen($digits); $i++){
-        $digit = $digits[$i];
-        $oldWords = $words;
-        $words = array();
-        //and add all possible letters to every previous combination
-        foreach($oldWords as $word){
-            foreach($dialpad[$digit] as $letter){
-                $words[] = $word . $letter;
-            }
-        }
-    }
+function stringToDigits($string)
+{
+	static $map;
+	if(!isset($map)){
+		$map['a'] = $map['b'] = $map['c'] = 2;
+	    $map['d'] = $map['e'] = $map['f'] = 3;
+	    $map['g'] = $map['h'] = $map['i'] = 4;
+		$map['j'] = $map['k'] = $map['l'] = 5;
+		$map['n'] = $map['m'] = $map['o'] = 6;
+		$map['p'] = $map['q'] = $map['r'] = $map['s'] = 7;
+		$map['t'] = $map['u'] = $map['v'] = 8;
+		$map['w'] = $map['x'] = $map['y'] = $map['z'] = 9;
+	}
+	
+	$string = str_split(strtolower($string), 1);
+	$digits = '';
 
-    if(count($words) == 0){
-        return array();
-    }
-
-    //TODO: This looks a little messy - should find a better way to query for
-    //all matching names. Or again, work it the other way, building a number
-    //for each user.
-
-    //create crazy query
-    foreach($words as $word){
-        $search[] = "first_name LIKE '%$word%' OR last_name LIKE '%$word%'";
-    }
-
-    $query = implode(" OR ", $search);
-
-    //get all users that are possible matches
-    $users = OpenVBX::getUsers(array($query . 'AND true = ' => 1));
-    return $users;
+	foreach($string as $char){
+		if(isset($map[$char])){
+			$digits .= $map[$char];
+		}
+	}
+	
+	return $digits;
 }
