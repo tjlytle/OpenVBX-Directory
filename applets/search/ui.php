@@ -4,9 +4,8 @@
         first or last name. The can press pound when done, or simply wait for 5
         seconds.</p>
         
-        <p>Select a group to search (selecting a user may cause problems, 
-        and is pointless):
-        <?php echo AppletUI::userGroupPicker('group'); ?></p>
+        <p>Select a group to search:
+        <?php echo AppletUI::userGroupPicker('group', 'Limit Directory Search to a Group', UserGroupPickerWidget::GROUP); ?></p>
 
         <h3>Search Prompt</h3>
         <p>When the caller reaches this menu they will hear this prompt:</p>
