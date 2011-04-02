@@ -4,7 +4,7 @@
 include_once(APPPATH.'models/vbx_device.php');
 
 //this should help with namespace problems
-define(SESSION_KEY, AppletInstance::getInstanceId());
+define('SESSION_KEY', AppletInstance::getInstanceId());
 session_start();
 
 //Note: in reverse chronological order for simpler condition tests, 'return' is
