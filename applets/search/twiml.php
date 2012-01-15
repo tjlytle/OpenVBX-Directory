@@ -26,10 +26,18 @@ if(isset($_SESSION[SESSION_KEY]['user'])){
             $_REQUEST['RecordingUrl'],
             $_REQUEST['Duration']);
 
+        $response = new Response();
+        $response->addHangup();
+        $response->Respond();
         return;
 
     //dialstatus means an attempt to connect
-    } elseif(isset($_REQUEST['DialStatus'])) {
+    } elseif(isset($_REQUEST['DialStatus']) OR isset($_REQUEST['DialCallStatus'])) {
+        //compatible with both API versions
+        if(!isset($_REQUEST['DialStatus'])){
+            $_REQUEST['DialStatus'] = $_REQUEST['DialCallStatus'];
+        }
+        
         if('answered' == $_REQUEST['DialStatus']){
             $response = new Response();
             $response->addHangup();
@@ -37,6 +45,8 @@ if(isset($_SESSION[SESSION_KEY]['user'])){
 
             return;
         }
+        
+        //not answered, so try again
         return connect(new Response(), $user)->Respond();
 
     }
