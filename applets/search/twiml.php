@@ -223,6 +223,6 @@ function getMatches($digits)
     $query = implode(" OR ", $search);
 
     //get all users that are possible matches
-    $users = OpenVBX::getUsers(array($query . 'AND true = ' => 1));
+    $users = OpenVBX::getUsers(array("(" . $query . ') AND true = ' => 1, 'is_active' => 1));
     return $users;
 }
