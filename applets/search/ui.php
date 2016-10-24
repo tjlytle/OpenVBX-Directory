@@ -1,8 +1,34 @@
+<?php 
+        $ci =& get_instance();
+        $ci->load->model('vbx_incoming_numbers');
+        
+        try {
+                $numbers = $ci->vbx_incoming_numbers->get_numbers();
+        }
+        catch (VBX_IncomingNumberException $e) {
+                log_message('Incoming numbers exception: '.$e->getMessage.' :: '.$e->getCode());
+                $numbers = array();
+        }
+        $callerId = AppletInstance::getValue('callerId', null); 
+?>
+
 <div class="vbx-applet">
 	<h2>Directory Search</h2>
         <p>Callers can search for users by dialing a few letters form the user's
         first or last name. The can press pound when done, or simply wair for 5
         seconds.
+
+        <h2>Caller ID</h2>
+            <div class="vbx-full-pane">
+                <fieldset class="vbx-input-container">
+                    <select class="medium" name="callerId">
+                        <option value="">Caller's Number</option>
+                        <?php if(count($numbers)) foreach($numbers as $number): $number->phone = normalize_phone_to_E164($number->phone); ?>
+                                        <option value="<?php echo $number->phone; ?>"<?php echo $number->phone == $callerId ? ' selected="selected" ' : ''; ?>><?php echo $number->name; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </fieldset>
+            </div>
 
         <h3>Search Prompt</h3>
         <p>When the caller reaches this menu they will hear this prompt:</p>
